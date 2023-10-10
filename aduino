@@ -1,65 +1,33 @@
-int ledPin = 13;  // LED 연결 핀
-int speakerPin = 9;  // 스피커 연결 핀
+int buzzerPin = 4;
+const int ledPin = 13;  // LED 연결 핀
 
 void setup() {
   pinMode(ledPin, OUTPUT);
-  pinMode(speakerPin, OUTPUT);
+  pinMode(7, INPUT_PULLUP);
   Serial.begin(9600);
+  
 }
-
 void loop() {
-  // 아두이노에서 시리얼로 데이터 읽기
-  if (Serial.available() > 0) {
-    char receivedChar = Serial.read();
-    if (receivedChar == '1') {
-      // 1을 받았을 때 LED 켜기
-      digitalWrite(ledPin, HIGH);
-      // 웹 서버로 데이터 보내기
-      Serial.println("Sending 1 to web server...");
-      sendToServer("1");
-    } else if (receivedChar == '2') {
-      // 2를 받았을 때 LED 끄기
-      digitalWrite(ledPin, LOW);
-      // 웹 서버로 데이터 보내기
-      Serial.println("Sending 2 to web server...");
-      sendToServer("2");
-    } else if (receivedChar == '3') {
-      // 3을 받았을 때 소리 내기
-      // 도
-      tone(BUZZER_PIN, 262, 500);
-      delay(500);
-      // 도
-      tone(BUZZER_PIN, 262, 500);
-      delay(500);
-      // 솔
-      tone(BUZZER_PIN, 392, 500);
-      delay(500);
-      // 솔
-      tone(BUZZER_PIN, 392, 500);
-      delay(500);
-      // 라
-      tone(BUZZER_PIN, 440, 500);
-      delay(500);
-      // 라
-      tone(BUZZER_PIN, 440, 500);
-      delay(500);
-      // 솔
-      tone(BUZZER_PIN, 392, 1000);
-      delay(1000);
-      noTone(speakerPin);  // 소리 중지
-      // 웹 서버로 데이터 보내기
-      Serial.println("Sending 3 to web server...");
-      sendToServer("3");
-    }
-  }
-}
-
-void sendToServer(String data) {
-  Serial.println("Connecting to web server...");
-  if (Serial.availableForWrite()) {
-    Serial.print("Sending data: ");
-    Serial.println(data);
-    Serial.write(data.c_str());
-    Serial.write('\n');
+  int sw = digitalRead(7);
+    Serial.println(sw);
+    delay(1000);
+  String m = Serial.readStringUntil('\n');
+  if(m == "on") digitalWrite(ledPin, HIGH);
+  if(m == "off") digitalWrite(ledPin, LOW);
+  if(m == "song") { 
+    tone(buzzerPin, 261, 500);
+    delay(500);
+    tone(buzzerPin, 261, 500);
+    delay(500);
+    tone(buzzerPin, 392, 500);
+    delay(500);
+    tone(buzzerPin, 392, 500);
+    delay(500);
+    tone(buzzerPin, 440, 500);
+    delay(500);
+    tone(buzzerPin, 440, 500);
+    delay(500);
+    tone(buzzerPin, 392, 500);
+    delay(500);
   }
 }
