@@ -25,7 +25,26 @@ void loop() {
       sendToServer("2");
     } else if (receivedChar == '3') {
       // 3을 받았을 때 소리 내기
-      tone(speakerPin, 1000, 1000);  // 1000Hz 주파수로 1초 동안 소리 내기
+      // 도
+      tone(BUZZER_PIN, 262, 500);
+      delay(500);
+      // 도
+      tone(BUZZER_PIN, 262, 500);
+      delay(500);
+      // 솔
+      tone(BUZZER_PIN, 392, 500);
+      delay(500);
+      // 솔
+      tone(BUZZER_PIN, 392, 500);
+      delay(500);
+      // 라
+      tone(BUZZER_PIN, 440, 500);
+      delay(500);
+      // 라
+      tone(BUZZER_PIN, 440, 500);
+      delay(500);
+      // 솔
+      tone(BUZZER_PIN, 392, 1000);
       delay(1000);
       noTone(speakerPin);  // 소리 중지
       // 웹 서버로 데이터 보내기
