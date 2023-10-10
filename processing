@@ -1,0 +1,42 @@
+import processing.serial.*;
+import processing.net.*;
+
+Serial port;
+Client client;
+
+void setup() {
+  // 시리얼 포트 연결
+  String portName = "COM7";  // 아두이노가 연결된 시리얼 포트의 이름
+  int baudRate = 9600;  // 아두이노와 시리얼 통신 속도
+  port = new Serial(this, portName, baudRate);
+  
+  // 웹 서버 연결
+  String serverAddress = "192.168.119.128";  // 서버 IP 주소
+  int serverPort = 12345;  // 서버 포트
+  client = new Client(this, serverAddress, serverPort);
+}
+
+void draw() {
+  // 아두이노에서 받은 데이터 읽기
+  while (port.available() > 0) {
+    char receivedChar = (char) port.read();
+    // 받은 데이터에 따라 처리
+    if (receivedChar == '1') { 
+      // 1을 받았을 때 LED 켜기
+      // LED를 제어하는 코드 추가
+    } else if (receivedChar == '2') {
+      // 2를 받았을 때 LED 끄기
+      // LED를 제어하는 코드 추가
+    } else if (receivedChar == '3') {
+      // 3을 받았을 때 소리 내기
+      // 소리를 내는 코드 추가
+    }
+  }
+}
+
+void sendToServer(String data) {
+  if (client != null && client.active()) {
+    client.write(data);
+    client.write('\n');
+  }
+}
